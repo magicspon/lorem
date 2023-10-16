@@ -1,3 +1,4 @@
+import { Output } from '@/components/Output'
 import { faker } from '@faker-js/faker'
 import { z } from 'zod'
 
@@ -36,13 +37,7 @@ export default function Page({ params }: { params: { search: string[] } }) {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <div className="flex flex-col gap-6">
-        {output.map((w) => (
-          <p className="text-2xl" key={w}>
-            {w}
-          </p>
-        ))}
-      </div>
+      <Output output={output} />
     </main>
   )
 }

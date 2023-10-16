@@ -21,7 +21,7 @@ const words = [
   'sentences',
   'slug',
   'text',
-  'word',
+  // 'word',
   'words',
 ] as const
 

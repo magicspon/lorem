@@ -12,7 +12,7 @@ const possibleLorem = z
     z.literal('sentences'),
     z.literal('slug'),
     z.literal('text'),
-    z.literal('word'),
+    // z.literal('word'),
     z.literal('words'),
   ])
   .default('words')

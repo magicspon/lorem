@@ -1,4 +1,5 @@
 import { Output } from '@/components/Output'
+import { Title } from '@/components/Title'
 import { faker } from '@faker-js/faker'
 import { z } from 'zod'
 
@@ -36,8 +37,13 @@ export default function Page({ params }: { params: { search: string[] } }) {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <Output output={output} />
-    </main>
+    <div className="flex min-h-screen flex-col items-center p-24 relative">
+      <div className="flex flex-col gap-12 grow">
+        <Title />
+        <div className="grow flex flex-col items-center justify-center">
+          <Output output={output} />
+        </div>
+      </div>
+    </div>
   )
 }

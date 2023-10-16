@@ -40,7 +40,7 @@ export default function Page({ params }: { params: { search: string[] } }) {
     <div className="flex min-h-screen flex-col items-center p-24 relative">
       <div className="flex flex-col gap-12 grow">
         <Title />
-        <div className="grow flex flex-col items-center justify-center">
+        <div className="grow flex gap-4 flex-col items-center justify-center">
           <Output output={output} />
         </div>
       </div>

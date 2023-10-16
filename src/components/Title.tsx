@@ -53,7 +53,7 @@ export function Title() {
         ref={$count}
         className="w-12"
         type="text"
-        defaultValue={search?.[0] ?? '50'}
+        defaultValue={search?.[0] ?? '10'}
       />
       /
       <Select
@@ -65,7 +65,7 @@ export function Title() {
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="words" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="g">
           {words.map((word) => (
             <SelectItem value={word} key={word}>
               {word}

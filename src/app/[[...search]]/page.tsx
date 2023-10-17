@@ -37,7 +37,7 @@ export default function Page({ params }: { params: { search: string[] } }) {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center p-24 relative">
+    <div className="flex min-h-screen flex-col items-center py-24 px-6 relative">
       <div className="flex flex-col gap-12 grow">
         <Title />
         <div className="grow flex gap-4 flex-col items-center justify-center">

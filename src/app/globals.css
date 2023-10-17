@@ -39,7 +39,6 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
   background: linear-gradient(
     70deg,
     hsl(237.8, 100%, 16.08%) 0%,

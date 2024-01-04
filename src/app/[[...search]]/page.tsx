@@ -22,7 +22,11 @@ const defaultData = z.tuple([
   possibleLorem.nullable().optional(),
 ])
 
-export default function Page({ params }: { params: { search: string[] } }) {
+export default async function Page({
+  params,
+}: {
+  params: { search: string[] }
+}) {
   const schema = defaultData.safeParse(params.search ?? ['10', 'words'])
   let output = ['cp.lo']
 

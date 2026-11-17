@@ -3,7 +3,7 @@ import { between, type Random } from './random.ts'
 import { words } from './words.ts'
 
 // The ranges faker uses, so the text reads as it did: a sentence is 3 to 10
-// words, a paragraph 3 to 6 sentences. `textSize` relies on them too.
+// words, a paragraph 3 to 6 sentences. `textScale` relies on them too.
 const sentenceWords = [3, 10] as const
 const paragraphSentences = [3, 6] as const
 

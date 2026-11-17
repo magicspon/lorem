@@ -1,24 +1,30 @@
 import { describe, expect, it } from 'vitest'
 
-import { textSize } from './text-size.ts'
+import { textScale } from './text-size.ts'
 
-describe('textSize', () => {
-  it('shows a few words at the top of the scale', () => {
-    expect(textSize({ count: 1, kind: 'words' })).toBe('9')
-    expect(textSize({ count: 3, kind: 'slug' })).toBe('9')
+describe('textScale', () => {
+  it('shows a single word at full scale', () => {
+    expect(textScale({ count: 1, kind: 'words' })).toBe(1)
   })
 
-  it('keeps the default request at step 8', () => {
-    expect(textSize({ count: 10, kind: 'words' })).toBe('8')
+  it('shows the default request at half scale', () => {
+    expect(textScale({ count: 10, kind: 'words' })).toBeCloseTo(0.5, 2)
   })
 
-  it('shrinks as the text grows', () => {
-    expect(textSize({ count: 5, kind: 'sentences' })).toBe('7')
-    expect(textSize({ count: 3, kind: 'paragraphs' })).toBe('6')
-    expect(textSize({ count: 8, kind: 'paragraphs' })).toBe('5')
+  it('shrinks smoothly as the text grows', () => {
+    const scales = [
+      textScale({ count: 3, kind: 'slug' }),
+      textScale({ count: 5, kind: 'sentences' }),
+      textScale({ count: 3, kind: 'paragraphs' }),
+      textScale({ count: 100, kind: 'paragraphs' }),
+    ]
+    for (const [index, scale] of scales.entries()) {
+      const next = scales[index + 1]
+      if (next !== undefined) expect(next).toBeLessThan(scale)
+    }
   })
 
-  it('stops at step 4 for the longest requests', () => {
-    expect(textSize({ count: 100, kind: 'paragraphs' })).toBe('4')
+  it('stays above zero for the longest requests', () => {
+    expect(textScale({ count: 100, kind: 'paragraphs' })).toBeGreaterThan(0)
   })
 })

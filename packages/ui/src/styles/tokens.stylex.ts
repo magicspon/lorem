@@ -237,12 +237,13 @@ export const size = stylex.defineConsts({
 
 /** A fixed dimension from the size scale. */
 export type Size = keyof typeof size
-/** Font families. Inter is loaded by `globals.css`. */
+/** Font families. Geist Mono is loaded by `globals.css`. */
 export const fonts = stylex.defineVars({
-  sans: "'Inter Variable', sans-serif",
-  heading: "'Inter Variable', sans-serif",
+  // The whole product is set in Geist Mono, so every family points at it.
   // A list rather than bare `monospace`, which browsers shrink to 13px.
-  mono: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
+  sans: "'Geist Mono Variable', ui-monospace, monospace",
+  heading: "'Geist Mono Variable', ui-monospace, monospace",
+  mono: "'Geist Mono Variable', ui-monospace, monospace",
 })
 
 /**

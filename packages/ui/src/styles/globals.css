@@ -1,4 +1,4 @@
-@import '@fontsource-variable/inter';
+@import '@fontsource-variable/geist-mono';
 
 /*
  * The CSS reset the components assume: no margins, border-box sizing,
@@ -21,7 +21,7 @@ html,
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
   tab-size: 4;
-  font-family: 'Inter Variable', sans-serif;
+  font-family: 'Geist Mono Variable', ui-monospace, monospace;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -55,9 +55,7 @@ code,
 kbd,
 samp,
 pre {
-  font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-    'Courier New', monospace;
+  font-family: 'Geist Mono Variable', ui-monospace, monospace;
   font-size: 1em;
 }
 

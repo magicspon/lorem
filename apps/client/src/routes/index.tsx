@@ -14,7 +14,7 @@ import {
   defaultRequest,
   generateLorem,
   loremSearch,
-  textSize,
+  textScale,
 } from '#/lorem/index.ts'
 
 /**
@@ -56,7 +56,7 @@ function GeneratePage(): ReactNode {
       <Stage.Back cursor="copy" align="center" onClick={copyOnClick}>
         <Container size="3" px="6" py="9">
           {/* The less text, the bigger it shows. */}
-          <Output blocks={blocks} size={textSize(request)} />
+          <Output blocks={blocks} scale={textScale(request)} />
         </Container>
       </Stage.Back>
       <Stage.Front px="4" py="3" render={<main />}>

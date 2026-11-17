@@ -1,5 +1,7 @@
 # Checks every pull request and every push to main. Vercel deploys on its own
-# through its Git integration; this workflow is what decides a PR can merge.
+# through its Git integration: a preview for every pull request, and
+# production only when a release bumps the app's version
+# (`apps/client/vercel.json`). This workflow is what decides a PR can merge.
 name: CI
 
 on:

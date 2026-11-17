@@ -1,7 +1,10 @@
 # Turns pending changesets into versions. While changesets wait on main, this
 # keeps a "Version packages" pull request open. Merging it bumps the versions,
 # writes the changelogs, and tags each new version. Every package is private,
-# so nothing is published to npm.
+# so nothing is published to npm. The app's new version is what lets Vercel
+# deploy that commit to production (`apps/client/scripts/vercel-ignore.mjs`).
+# A release of `@repo/ui` alone bumps the app too, through
+# `updateInternalDependents` in `.changeset/config.json`.
 name: Release
 
 on:

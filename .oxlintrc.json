@@ -40,7 +40,7 @@
       }
     },
     {
-      "files": ["apps/lorem-click/**/*.{ts,tsx}"],
+      "files": ["apps/client/**/*.{ts,tsx}"],
       "rules": {
         "tuesday/no-local-styles": "error"
       }

@@ -54,11 +54,11 @@ Each package a change touches needs its own changeset: run `pnpm changeset`.
 
 ## What's inside
 
-| Folder             | What it is                                                          |
-| ------------------ | ------------------------------------------------------------------- |
-| `apps/lorem-click` | The app, built on [TanStack Start](https://tanstack.com/start).     |
-| `packages/ui`      | The components: [Base UI](https://base-ui.com) styled with StyleX.  |
-| `packages/config`  | Shared settings for TypeScript, Vitest, Storybook, Vite and oxlint. |
+| Folder            | What it is                                                          |
+| ----------------- | ------------------------------------------------------------------- |
+| `apps/client`     | The app, built on [TanStack Start](https://tanstack.com/start).     |
+| `packages/ui`     | The components: [Base UI](https://base-ui.com) styled with StyleX.  |
+| `packages/config` | Shared settings for TypeScript, Vitest, Storybook, Vite and oxlint. |
 
 The app writes no styles of its own. It builds every screen from `@repo/ui`. `AGENTS.md` lists
 the rules the code follows, and each folder's `README.md` explains that part in more detail.

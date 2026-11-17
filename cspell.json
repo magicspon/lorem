@@ -26,7 +26,7 @@
     "storybook-static",
     "**/.storybook/**/*.ts",
     "*-fixtures.ts",
-    "apps/lorem-click/src/lorem/words.ts",
+    "apps/client/src/lorem/words.ts",
     "**/test-results/**",
     "**/coverage/**",
     ".agents/skills/**",

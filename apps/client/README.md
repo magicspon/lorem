@@ -37,7 +37,7 @@ Vercel deploys main, and a preview of each pull request, through its Git integra
 `nitro()` in `vite.config.ts` sees Vercel's build and writes Vercel's output. To set up the
 project in Vercel:
 
-- **Root Directory:** `apps/lorem-click`. Vercel installs from the workspace root.
+- **Root Directory:** `apps/client`. Vercel installs from the workspace root.
 - **Framework preset:** TanStack Start, or Other. The build command is `pnpm build`.
 - **Node.js version:** the newest Vercel offers. The repo asks for Node 26 (`.nvmrc`).
 

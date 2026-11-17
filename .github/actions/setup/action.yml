@@ -1,0 +1,19 @@
+# The setup every CI job shares: pnpm, Node from .nvmrc with the pnpm cache,
+# and the workspace's dependencies. Each job calls this after checkout, so the
+# jobs can run side by side without repeating these steps.
+name: Setup
+description: Install pnpm, Node and the workspace's dependencies.
+
+runs:
+  using: composite
+  steps:
+    # Reads the version from `packageManager` in package.json.
+    - uses: pnpm/action-setup@v4
+
+    - uses: actions/setup-node@v5
+      with:
+        node-version-file: .nvmrc
+        cache: pnpm
+
+    - run: pnpm install --frozen-lockfile
+      shell: bash

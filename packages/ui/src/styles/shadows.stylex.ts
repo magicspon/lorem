@@ -32,6 +32,21 @@ export const shadows = stylex.defineVars({
   outline: `0 0 0 1px ${colors.menuRing}`,
   /** A floating panel: popover, select and combobox lists, submenus. */
   popup: `0 0 0 1px ${colors.menuRing}, 0 25px 50px -12px ${shade(55)}`,
+  /**
+   * The stage's floating panel: a hairline and a halo spread evenly on every
+   * side. Each layer doubles the blur and fades, so the stacked layers ease
+   * out smoothly where one wide shadow would show a flat grey ring.
+   */
+  stage: [
+    `0 0 0 1px ${colors.menuRing}`,
+    `0 0 4px ${shade(14)}`,
+    `0 0 8px ${shade(12)}`,
+    `0 0 16px ${shade(11)}`,
+    `0 0 32px ${shade(10)}`,
+    `0 0 64px ${shade(9)}`,
+    `0 0 128px ${shade(8)}`,
+    `0 0 256px ${shade(7)}`,
+  ].join(', '),
   /** A dropdown menu. */
   menu: `0 0 0 1px ${colors.menuRing}, 0 25px 50px -12px ${shade(55)}`,
   /** A chart tooltip card. */

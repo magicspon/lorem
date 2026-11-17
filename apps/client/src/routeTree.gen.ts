@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HumansDottxtRouteImport } from './routes/humans[.]txt'
 import { Route as CountKindRouteImport } from './routes/$count.$kind'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HumansDottxtRoute = HumansDottxtRouteImport.update({
+  id: '/humans.txt',
+  path: '/humans.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CountKindRoute = CountKindRouteImport.update({
@@ -25,27 +31,31 @@ const CountKindRoute = CountKindRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/humans.txt': typeof HumansDottxtRoute
   '/$count/$kind': typeof CountKindRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/humans.txt': typeof HumansDottxtRoute
   '/$count/$kind': typeof CountKindRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/humans.txt': typeof HumansDottxtRoute
   '/$count/$kind': typeof CountKindRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$count/$kind'
+  fullPaths: '/' | '/humans.txt' | '/$count/$kind'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$count/$kind'
-  id: '__root__' | '/' | '/$count/$kind'
+  to: '/' | '/humans.txt' | '/$count/$kind'
+  id: '__root__' | '/' | '/humans.txt' | '/$count/$kind'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HumansDottxtRoute: typeof HumansDottxtRoute
   CountKindRoute: typeof CountKindRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/humans.txt': {
+      id: '/humans.txt'
+      path: '/humans.txt'
+      fullPath: '/humans.txt'
+      preLoaderRoute: typeof HumansDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$count/$kind': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HumansDottxtRoute: HumansDottxtRoute,
   CountKindRoute: CountKindRoute,
 }
 export const routeTree = rootRouteImport

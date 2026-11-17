@@ -8,4 +8,4 @@ export {
   type LoremKind,
   type LoremRequest,
 } from './kinds.ts'
-export { textSize } from './text-size.ts'
+export { textScale } from './text-size.ts'

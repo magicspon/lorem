@@ -1,8 +1,8 @@
 import { IconButton } from '@repo/ui/actions/icon-button'
 import { ScrambledText } from '@repo/ui/effects/scrambled-text'
 import { Flex, Stack } from '@repo/ui/layout'
+import { fluidTextStyles } from '@repo/ui/typography/fluid-text'
 import { Text } from '@repo/ui/typography/text'
-import type { TextSize } from '@repo/ui/typography/type-styles'
 import { CopyIcon, RefreshCwIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 
@@ -10,18 +10,23 @@ import type { ReactNode } from 'react'
 export type OutputProps = {
   /** The generated text, one paragraph per block. */
   blocks: readonly string[]
-  /** The type-scale step to show it at. */
-  size: TextSize
+  /** How big to show it, from 0 (smallest) to 1 (a single word). */
+  scale: number
 }
 
 /** The generated text, one paragraph per block. */
-export function Output({ blocks, size }: OutputProps): ReactNode {
+export function Output({ blocks, scale }: OutputProps): ReactNode {
   return (
     <Stack gap="5">
       {blocks.map((block, index) => (
         // Generated text can repeat, so the position is the stable key.
         // eslint-disable-next-line react/no-array-index-key
-        <Text key={index} size={size} render={<p />}>
+        <Text
+          key={index}
+          sx={fluidTextStyles(scale)}
+          breakAnywhere
+          render={<p />}
+        >
           {/* A click on the page copies the text, and sends a scramble out
               from where it landed, to show it happened. */}
           <ScrambledText>{block}</ScrambledText>

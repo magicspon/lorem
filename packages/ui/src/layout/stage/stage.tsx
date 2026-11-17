@@ -42,7 +42,7 @@ const styles = stylex.create({
     backgroundColor: `color-mix(in oklab, ${colors.card} 90%, transparent)`,
     backdropFilter: 'blur(8px) saturate(1.4)',
     color: colors.cardForeground,
-    boxShadow: shadows.popup,
+    boxShadow: shadows.stage,
   },
 })
 

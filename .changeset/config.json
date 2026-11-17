@@ -5,13 +5,19 @@
   "changelog": [
     "@changesets/changelog-github",
     {
-      "repo": "magicspon/lorem-click"
+      "repo": "magicspon/lorem"
     }
   ],
   "commit": false,
-  "privatePackages": { "version": true, "tag": true },
+  "privatePackages": {
+    "version": true,
+    "tag": true
+  },
   "ignore": [],
   "fixed": [],
   "linked": [],
-  "updateInternalDependencies": "patch"
+  "updateInternalDependencies": "patch",
+  "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
+    "updateInternalDependents": "always"
+  }
 }

@@ -24,6 +24,7 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+      { rel: 'author', href: '/humans.txt' },
       // Written by the service worker's plugin, so a build alone has it.
       ...(import.meta.env.PROD
         ? [{ rel: 'manifest', href: '/manifest.webmanifest' }]

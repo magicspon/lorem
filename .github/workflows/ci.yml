@@ -1,5 +1,10 @@
 # Checks every pull request and every push to main. Vercel deploys on its own
-# through its Git integration; this workflow is what decides a PR can merge.
+# through its Git integration: a preview for every pull request, and
+# production only when a release bumps the app's version
+# (`apps/client/vercel.json`). This workflow is what decides a PR can merge.
+#
+# Each check is its own job so they run side by side: the run takes as long as
+# the slowest check, not the sum of them all.
 name: CI
 
 on:
@@ -20,21 +25,15 @@ env:
   TURBO_TELEMETRY_DISABLED: 1
 
 jobs:
-  check:
+  # The quick checks share one job: each takes seconds, so a job apiece would
+  # spend more time on setup than on checking.
+  lint:
+    name: Format, lint and spelling
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5
-
-      # Reads the version from `packageManager` in package.json.
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v5
-        with:
-          node-version-file: .nvmrc
-          cache: pnpm
-
-      - run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup
 
       - name: Format and lint
         run: pnpm check
@@ -45,17 +44,36 @@ jobs:
       - name: Changesets name real packages
         run: pnpm changeset:check
 
-      - name: Types
-        run: pnpm typecheck
+  types:
+    name: Types
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup
+      - run: pnpm typecheck
+
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup
 
       # The stories run as tests in headless Chromium. Playwright comes in
       # through `@repo/config`, so its own copy installs the browser.
       - name: Install Chromium
         run: pnpm --filter @repo/config exec playwright install --with-deps chromium
 
-      - name: Tests
-        run: pnpm test
+      - run: pnpm test
 
-      # Catches a build that breaks even when the tests pass.
-      - name: Build
-        run: pnpm build
+  # Catches a build that breaks even when the tests pass.
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup
+      - run: pnpm build

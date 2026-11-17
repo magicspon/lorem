@@ -26,11 +26,16 @@
     "storybook-static",
     "**/.storybook/**/*.ts",
     "*-fixtures.ts",
+    "apps/lorem-click/src/lorem/words.ts",
     "**/test-results/**",
     "**/coverage/**",
     ".agents/skills/**",
     ".claude/skills/**"
   ],
   "language": "en,en-GB",
-  "ignoreRegExpList": ["/%[0-9A-Fa-f]{2}/g", "/\\b[A-Z2-7]{16,}\\b/g"]
+  "ignoreRegExpList": [
+    "/%[0-9A-Fa-f]{2}/g",
+    "/\\b[A-Z2-7]{16,}\\b/g",
+    "/lorem ipsum[^\\x27\"`]*/gi"
+  ]
 }

@@ -9,6 +9,7 @@
   },
   "scripts": {
     "dev": "pnpm --filter lorem-click dev",
+    "dev:portless": "pnpm --filter lorem-click dev:portless",
     "build": "pnpm --filter lorem-click build",
     "start": "pnpm --filter lorem-click start",
     "test": "vitest run",

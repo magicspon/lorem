@@ -48,6 +48,7 @@ extname
 fallowrc
 fieldset
 fontsource
+fract
 funcname
 GHES
 globex
@@ -57,10 +58,12 @@ graphile
 GRIDLINE
 gridlines
 groupable
+gsap
 halfedges
 hashtext
 haspopup
 healthcheck
+highp
 hiit
 hitbox
 HMAC
@@ -85,6 +88,7 @@ libpg
 lightningcss
 Lindqvist
 Liskov
+loadingdone
 LOCALTIME
 LOCALTIMESTAMP
 logomark
@@ -172,6 +176,7 @@ swatched
 swipeable
 tablists
 tanstack
+texels
 timestamptz
 Toggleable
 totp

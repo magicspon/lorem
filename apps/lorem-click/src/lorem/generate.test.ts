@@ -1,4 +1,3 @@
-import { Faker, en } from '@faker-js/faker'
 import { describe, expect, it } from 'vitest'
 
 import { generateLorem, joinBlocks } from './generate.ts'
@@ -8,11 +7,10 @@ import {
   loremRequest,
   loremSearch,
 } from './kinds.ts'
+import { seededRandom, type Random } from './random.ts'
 
-function seeded(): Faker {
-  const faker = new Faker({ locale: [en] })
-  faker.seed(42)
-  return faker
+function seeded(): Random {
+  return seededRandom(42)
 }
 
 describe('generateLorem', () => {
@@ -28,10 +26,6 @@ describe('generateLorem', () => {
     ).toHaveLength(4)
   })
 
-  it('makes one block per line', () => {
-    expect(generateLorem({ count: 3, kind: 'lines' }, seeded())).toHaveLength(3)
-  })
-
   it('joins a slug with hyphens', () => {
     const [slug] = generateLorem({ count: 3, kind: 'slug' }, seeded())
     expect(slug).toMatch(/^[a-z]+-[a-z]+-[a-z]+$/)
@@ -42,6 +36,17 @@ describe('generateLorem', () => {
       const blocks = generateLorem({ count: 2, kind }, seeded())
       expect(blocks.length).toBeGreaterThan(0)
       expect(blocks.every((block) => block.length > 0)).toBe(true)
+    }
+  })
+
+  it('writes each sentence with a capital and a full stop', () => {
+    const [text] = generateLorem({ count: 20, kind: 'sentences' }, seeded())
+    const found = text?.match(/[A-Z][a-z ]+\./g) ?? []
+    expect(found).toHaveLength(20)
+    for (const one of found) {
+      const length = one.split(' ').length
+      expect(length).toBeGreaterThanOrEqual(3)
+      expect(length).toBeLessThanOrEqual(10)
     }
   })
 
@@ -68,6 +73,10 @@ describe('loremRequest', () => {
   })
 
   it.each([
+    { count: '3', kind: 'sentence' },
+    { count: '3', kind: 'paragraph' },
+    { count: '3', kind: 'lines' },
+    { count: '3', kind: 'text' },
     { count: '0', kind: 'words' },
     { count: '101', kind: 'words' },
     { count: '2.5', kind: 'words' },

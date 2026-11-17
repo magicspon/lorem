@@ -1,19 +1,7 @@
 import { z } from 'zod'
 
-/**
- * What the generator can make, each a `faker.lorem` method that takes a
- * count. `text` is the one that ignores it.
- */
-export const loremKinds = [
-  'words',
-  'sentence',
-  'sentences',
-  'paragraph',
-  'paragraphs',
-  'lines',
-  'slug',
-  'text',
-] as const
+/** What the generator can make, each from a count. */
+export const loremKinds = ['words', 'sentences', 'paragraphs', 'slug'] as const
 
 /** One of {@link loremKinds}. */
 export type LoremKind = (typeof loremKinds)[number]
@@ -22,11 +10,11 @@ export type LoremKind = (typeof loremKinds)[number]
 export const maxCount = 100
 
 /** The request a page opens with. */
-export const defaultRequest = { count: 10, kind: 'sentence' } as const
+export const defaultRequest = { count: 10, kind: 'words' } as const
 
 /**
- * A request the generator accepts: the server function's input and the
- * form's check. Anything out of range or unknown is refused.
+ * A request the generator accepts: the old path's check and the form's
+ * check. Anything out of range or unknown is refused.
  */
 export const loremRequest = z.object({
   count: z.coerce.number().int().min(1).max(maxCount),

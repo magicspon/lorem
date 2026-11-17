@@ -12,6 +12,7 @@ import type { ReactNode } from 'react'
 
 import { appName } from '#/brand.ts'
 import { defaultRequest } from '#/lorem/index.ts'
+import { useServiceWorker } from '#/service-worker/use-service-worker.ts'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -23,6 +24,10 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+      // Written by the service worker's plugin, so a build alone has it.
+      ...(import.meta.env.PROD
+        ? [{ rel: 'manifest', href: '/manifest.webmanifest' }]
+        : []),
       // The StyleX plugin serves its CSS from a virtual path in dev. A build
       // appends it to the bundled stylesheet, where a link would 404.
       ...(import.meta.env.DEV
@@ -40,8 +45,12 @@ export const Route = createRootRoute({
   notFoundComponent: NotFound,
 })
 
-/** The document every page sits in. Every page can show toasts. */
+/**
+ * The document every page sits in. Every page can show toasts, and works
+ * offline once the service worker is in.
+ */
 function RootDocument(): ReactNode {
+  useServiceWorker()
   return (
     <html lang="en">
       <head>

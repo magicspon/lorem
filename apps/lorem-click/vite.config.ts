@@ -9,6 +9,8 @@ import react from '@vitejs/plugin-react'
 import { nitro } from 'nitro/vite'
 import { defineConfig } from 'vite'
 
+import { serviceWorker } from './src/service-worker/vite-plugin.ts'
+
 // ui's tokens hash from their path, so StyleX resolves from the repo root the
 // same way here as in ui. Once the app has its own repo, this is that root.
 const repoRoot = path.resolve(
@@ -37,5 +39,7 @@ export default defineConfig(({ command }) => ({
       lightningcssOptions: stylexLightningcss,
     }),
     react(),
+    // The browser build's `/sw.js` and web app manifest, for offline use.
+    serviceWorker(),
   ],
 }))

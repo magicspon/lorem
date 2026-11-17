@@ -24,6 +24,8 @@ export type GeneratorFormProps = {
   request: LoremRequest
   /** Called with a new request once the controls rest, or on Enter. */
   onGenerate: (request: LoremRequest) => void
+  /** Controls placed at the end of the line, such as copy. */
+  actions?: ReactNode
 }
 
 /**
@@ -34,6 +36,7 @@ export type GeneratorFormProps = {
 export function GeneratorForm({
   request,
   onGenerate,
+  actions,
 }: GeneratorFormProps): ReactNode {
   const [count, setCount] = useState(String(request.count))
   const [kind, setKind] = useState<LoremKind>(request.kind)
@@ -72,15 +75,19 @@ export function GeneratorForm({
       render={<form onSubmit={submit} />}
       align="center"
       justify="center"
-      wrap="wrap"
+      // One line: it floats over the text, so it stays as small as it can.
+      wrap="nowrap"
       gap="2"
     >
-      <Heading level={1} size="4">
-        {appName}
-      </Heading>
-      <Text tone="muted" aria-hidden>
-        /
-      </Text>
+      {/* On a phone the controls need the whole line, so the name steps out. */}
+      <Flex display={{ initial: 'none', sm: 'flex' }} align="center" gap="2">
+        <Heading level={1} size="4">
+          {appName}
+        </Heading>
+        <Text tone="muted" aria-hidden>
+          /
+        </Text>
+      </Flex>
       <Input
         aria-label="How many"
         type="number"
@@ -111,6 +118,7 @@ export function GeneratorForm({
             makes the person scroll. */}
         <Select.Options items={KIND_ITEMS} alignItemWithTrigger={false} />
       </Select.Root>
+      {actions}
     </Flex>
   )
 }

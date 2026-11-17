@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <!-- Radix mint, cyan and iris, step 11; the dark steps for a dark browser. -->
+  <style>
+    .mint { stop-color: #027864 } .cyan { stop-color: #107d98 } .iris { stop-color: #5753c6 }
+    @media (prefers-color-scheme: dark) {
+      .mint { stop-color: #58d5ba } .cyan { stop-color: #4ccce6 } .iris { stop-color: #b1a9ff }
+    }
+  </style>
+  <defs>
+    <linearGradient id="a" x1="0%" x2="100%" y1="100%" y2="0%">
+      <stop offset="0%" class="mint"/>
+      <stop offset="50%" class="cyan"/>
+      <stop offset="100%" class="iris"/>
+    </linearGradient>
+  </defs>
+  <rect width="440" height="440" x="30" y="30" fill="none" stroke="url(#a)" stroke-width="24" rx="100" ry="100"/>
+  <rect width="150" height="150" x="150" y="150" fill="none" stroke="url(#a)" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" rx="16" ry="16"/>
+  <rect width="150" height="150" x="200" y="200" fill="none" stroke="url(#a)" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" rx="16" ry="16"/>
+</svg>

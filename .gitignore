@@ -1,35 +1,39 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
+node_modules
 .DS_Store
-*.pem
+dist
+dist-ssr
+*.local
+.env
+.nitro
+.tanstack
+.wrangler
+.output
+.vinxi
+.next
+__unconfig*
+todos.json
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+*storybook.log
+storybook-static
+.fallow/
+# `pnpm test:coverage` output, read by fallow.
+coverage
 
-# local env files
-.env*.local
+# Playwright's own run artefacts. The fixture store under `apps/e2e/tests/mocks`
+# is deliberately *not* here: those files are the answer the tests assert on, and
+# a fixture nobody can review is the failure this package exists to prevent.
+test-results
+playwright-report
+blob-report
+.playwright
 
-# vercel
+
+
+# Turborepo's local cache and logs.
+.turbo
+
+# Claude Code's git worktrees: each is a full checkout, with its own configs.
+.claude/worktrees/
+
+# Vercel CLI links and its local build output.
 .vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts

@@ -1,0 +1,49 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["import", "typescript", "unicorn"],
+  "jsPlugins": ["./packages/config/src/oxlint/tuesday.ts"],
+  "categories": {
+    "correctness": "error"
+  },
+  "options": {
+    "typeAware": true
+  },
+  "env": {
+    "builtin": true
+  },
+  "ignorePatterns": [
+    "**/build/**",
+    "**/coverage/**",
+    "**/dist/**",
+    "**/snap/**",
+    "**/vite.config.*.timestamp-*.*",
+    "graphify-out/**"
+  ],
+  "rules": {
+    "tuesday/no-raw-length": "error",
+    "tuesday/no-raw-shadow": "error",
+    "tuesday/no-type-size": "error",
+    "tuesday/sx-on-foreign-component": "error"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.{js,ts,tsx}"],
+      "env": {
+        "es2020": true
+      },
+      "rules": {}
+    },
+    {
+      "files": ["packages/ui/src/typography/**/*.{ts,tsx}"],
+      "rules": {
+        "tuesday/no-type-size": "off"
+      }
+    },
+    {
+      "files": ["apps/lorem-click/**/*.{ts,tsx}"],
+      "rules": {
+        "tuesday/no-local-styles": "error"
+      }
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "@repo/config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./tsconfig/*": "./tsconfig/*",
+    "./vitest/coverage": "./src/vitest/coverage.ts",
+    "./vitest/node": "./src/vitest/node.ts",
+    "./vitest/storybook": "./src/vitest/storybook.ts",
+    "./storybook/main": "./src/storybook/main.ts",
+    "./storybook/preview": "./src/storybook/preview.ts",
+    "./vite/stylex-sx": "./src/vite/stylex-sx.ts",
+    "./vite/stylex-lightningcss": "./src/vite/stylex-lightningcss.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test:unit": "vitest run --coverage",
+    "clean": "rm -rf node_modules .turbo coverage"
+  },
+  "dependencies": {
+    "@storybook/addon-vitest": "^10.6.7",
+    "@vitest/browser-playwright": "^5.1.0",
+    "lightningcss": "1.33.0"
+  },
+  "devDependencies": {
+    "@storybook/react-vite": "^10.6.7",
+    "@types/node": "^26.6.6",
+    "oxlint": "^1.93.0",
+    "storybook": "^10.6.7",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  },
+  "peerDependencies": {
+    "@storybook/react-vite": "^10.6.0",
+    "storybook": "^10.5.9",
+    "vitest": "^5.0.0"
+  }
+}

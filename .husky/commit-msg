@@ -1,0 +1,2 @@
+node scripts/scope-commit.mjs "$1"
+pnpm dlx commitlint --edit "$1"

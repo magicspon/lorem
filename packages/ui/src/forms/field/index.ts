@@ -1,0 +1,21 @@
+// Import as a namespace: `import * as Field from '@repo/ui/forms/field'`.
+export {
+  Field as Root,
+  FieldContent as Content,
+  FieldDescription as Description,
+  FieldError as Error,
+  FieldGroup as Group,
+  FieldLabel as Label,
+  FieldSeparator as Separator,
+  FieldTitle as Title,
+  type FieldContentProps as ContentProps,
+  type FieldDescriptionProps as DescriptionProps,
+  type FieldErrorItem as ErrorItem,
+  type FieldErrorProps as ErrorProps,
+  type FieldGroupProps as GroupProps,
+  type FieldLabelProps as LabelProps,
+  type FieldOrientation as Orientation,
+  type FieldProps as RootProps,
+  type FieldSeparatorProps as SeparatorProps,
+  type FieldTitleProps as TitleProps,
+} from './field'

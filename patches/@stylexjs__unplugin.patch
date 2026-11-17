@@ -1,0 +1,92 @@
+diff --git a/lib/core.js b/lib/core.js
+index 23e8c47ad8f19139b70ad89df42bf9d899fa21cd..e9de2a419864bf80a50d9e75fa243105e34c40fa 100644
+--- a/lib/core.js
++++ b/lib/core.js
+@@ -239,6 +239,7 @@ const unpluginFactory = (userOptions = {}, metaOptions) => {
+   async function runBabelTransform(inputCode, filename, callerName) {
+     const result = await (0, _core.transformAsync)(inputCode, {
+       babelrc: false,
++      sourceMaps: true,
+       filename,
+       presets,
+       plugins: [...plugins, /\.jsx?/.test(_nodePath.default.extname(filename)) ? _pluginSyntaxFlow.default : [_pluginSyntaxTypescript.default, {
+@@ -354,6 +355,12 @@ const unpluginFactory = (userOptions = {}, metaOptions) => {
+       const {
+         metadata
+       } = result;
++      // Webpack's persistent cache skips this transform for unchanged modules,
++      // so the rules also go on the module, whose buildInfo the cache stores.
++      const nativeModule = this?.getNativeBuildContext?.()?.loaderContext?._module;
++      if (!stylexOptions.runtimeInjection && nativeModule?.buildInfo) {
++        nativeModule.buildInfo.stylex = metadata?.stylex ?? [];
++      }
+       if (!stylexOptions.runtimeInjection) {
+         const hasRules = metadata && Array.isArray(metadata.stylex) && metadata.stylex.length > 0;
+         const shared = getSharedStore();
+diff --git a/lib/es/core.mjs b/lib/es/core.mjs
+index 583431190aab3aad75c831ff982d84a3bcc48341..8c9a44f8d46d0baaf02db997dc2b7aa62d3a95d0 100644
+--- a/lib/es/core.mjs
++++ b/lib/es/core.mjs
+@@ -230,6 +230,7 @@ export const unpluginFactory = (userOptions = {}, metaOptions) => {
+   async function runBabelTransform(inputCode, filename, callerName) {
+     const result = await transformAsync(inputCode, {
+       babelrc: false,
++      sourceMaps: true,
+       filename,
+       presets,
+       plugins: [...plugins, /\.jsx?/.test(path.extname(filename)) ? flowSyntaxPlugin : [typescriptSyntaxPlugin, {
+@@ -345,6 +346,12 @@ export const unpluginFactory = (userOptions = {}, metaOptions) => {
+       const {
+         metadata
+       } = result;
++      // Webpack's persistent cache skips this transform for unchanged modules,
++      // so the rules also go on the module, whose buildInfo the cache stores.
++      const nativeModule = this?.getNativeBuildContext?.()?.loaderContext?._module;
++      if (!stylexOptions.runtimeInjection && nativeModule?.buildInfo) {
++        nativeModule.buildInfo.stylex = metadata?.stylex ?? [];
++      }
+       if (!stylexOptions.runtimeInjection) {
+         const hasRules = metadata && Array.isArray(metadata.stylex) && metadata.stylex.length > 0;
+         const shared = getSharedStore();
+diff --git a/lib/es/webpack.mjs b/lib/es/webpack.mjs
+index e6328611dc6917b16cabe8af253efbfbadb5aa20..01559699662f552b41a2b828ef17df258a06dfcb 100644
+--- a/lib/es/webpack.mjs
++++ b/lib/es/webpack.mjs
+@@ -8,6 +8,16 @@ export function attachWebpackHooks(plugin) {
+       const PLUGIN_NAME = '@stylexjs/unplugin';
+       compiler.hooks.thisCompilation.tap(PLUGIN_NAME, compilation => {
+         plugin.__stylexResetState?.();
++        // Restore the rules of modules webpack took from its cache, which were
++        // never transformed in this build.
++        compilation.hooks.finishModules.tap(PLUGIN_NAME, modules => {
++          const shared = plugin.__stylexGetSharedStore?.();
++          if (!shared) return;
++          for (const m of modules) {
++            const rules = m.buildInfo?.stylex;
++            if (m.resource && Array.isArray(rules) && rules.length > 0) shared.rulesById.set(m.resource, rules);
++          }
++        });
+         const wp = compiler.webpack || compiler.rspack || undefined;
+         const stage = wp?.Compilation?.PROCESS_ASSETS_STAGE_SUMMARIZE;
+         const tapOptions = stage != null ? {
+diff --git a/lib/webpack.js b/lib/webpack.js
+index aa4e30ce6943c702de498b5bda7ca496d03ff59b..7e52929ffe5c8e288c3f02415a8c514bdbf0ab9d 100644
+--- a/lib/webpack.js
++++ b/lib/webpack.js
+@@ -15,6 +15,16 @@ function attachWebpackHooks(plugin) {
+       const PLUGIN_NAME = '@stylexjs/unplugin';
+       compiler.hooks.thisCompilation.tap(PLUGIN_NAME, compilation => {
+         plugin.__stylexResetState?.();
++        // Restore the rules of modules webpack took from its cache, which were
++        // never transformed in this build.
++        compilation.hooks.finishModules.tap(PLUGIN_NAME, modules => {
++          const shared = plugin.__stylexGetSharedStore?.();
++          if (!shared) return;
++          for (const m of modules) {
++            const rules = m.buildInfo?.stylex;
++            if (m.resource && Array.isArray(rules) && rules.length > 0) shared.rulesById.set(m.resource, rules);
++          }
++        });
+         const wp = compiler.webpack || compiler.rspack || undefined;
+         const stage = wp?.Compilation?.PROCESS_ASSETS_STAGE_SUMMARIZE;
+         const tapOptions = stage != null ? {

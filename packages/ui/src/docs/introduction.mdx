@@ -1,0 +1,97 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks'
+
+import { ColorScales, ColorTokens, StepUses } from './color-grid'
+import { SpaceScale, TypeExamples, TypeScale } from './scales'
+import { ShadowGrid } from './shadow-grid'
+import * as StateStories from './states.stories'
+
+<Meta title="Introduction" />
+
+# @repo/ui
+
+The component library behind tuesday: [Base UI](https://base-ui.com) components styled with
+[StyleX](https://stylexjs.com). Every look comes from a small set of **tokens**, and every
+component composes them. The app writes no styles of its own.
+
+## How it fits together
+
+1. **Tokens** live in `styles/tokens.stylex.ts`: `colors`, `space`, `size`, `fontSize`,
+   `lineHeight`, `radii`, `fonts` and `motion`, with `shadows` beside them. A component reads a
+   token, never a literal colour or length. The lint rules `no-raw-length` and `no-raw-shadow`
+   check this.
+2. **Components** live in one folder each, `src/<group>/<name>/`, and are imported by that path:
+   `@repo/ui/actions/button`. A component with several parts is a namespace (`Card.Root`,
+   `Card.Header`).
+3. **Looks are variants, not props.** A component offers a few named variants
+   (`<Button variant="outline">`) rather than width, gap or colour props. A look that is missing
+   becomes a new variant here.
+4. **`sx` composes.** Every part takes `sx`, merged after its own styles. To give another element
+   a component's look, pass its exported styles: `<Link sx={buttonStyles()} />`.
+5. **Layout primitives** (`Box`, `Flex`, `Stack`, `Grid`, `Container`, `Section`) take tokens
+   only, with a value per breakpoint where it helps: `gap={{ initial: '2', md: '4' }}`.
+
+## Colour
+
+Colours come from [Radix Colors](https://www.radix-ui.com/colors). Each scale has 12 steps, and
+each step is designed for one use:
+
+<StepUses />
+
+The tokens keep semantic names (`primary`, `border`, `mutedForeground`) and point each one at the
+step that fits its use. Sage is the neutral, mint is the primary, red is destructive, green is
+success and amber is warning. The `A` scales are the same steps with transparency, for fills that
+sit over any surface.
+
+<ColorScales />
+
+`scripts/radix-colors.mjs` copies the scales from `@radix-ui/colors` into
+`styles/radix.stylex.ts`, because StyleX reads only values it can see when it compiles. To use
+another scale, add it to the script and run `pnpm --filter @repo/ui colors`.
+
+### Semantic tokens
+
+<ColorTokens />
+
+### Light and dark
+
+Every colour token holds both schemes in `light-dark()`, so the page follows the system's
+setting with nothing to switch. To choose a scheme over the system's, apply `lightTheme` or
+`darkTheme` from `@repo/ui/styles/themes` to any element. `ColorSchemeToggle` switches to the
+other scheme with one press, and back to the system's with the next.
+
+## Typography
+
+Text uses `Text` and `Heading` from `typography/`, on a nine-step scale. A heading's `level`
+picks the element, and its `size` picks the look, so the outline stays correct whatever the
+size. Inter is the typeface.
+
+<TypeScale />
+
+<TypeExamples />
+
+## Space
+
+`space` is for gap, padding and margin only, in nine steps. A layout prop takes the step, not a
+length: `<Stack gap="3" p="4">`. Other fixed lengths, such as control heights and icon sizes, come
+from `size`, keyed by multiples of 0.25rem (`size['9']` is 2.25rem).
+
+<SpaceScale />
+
+## Shadows
+
+Every box shadow is a token in `styles/shadows.stylex.ts`; a component never writes one. They
+take their colours from the Radix steps: focus rings on step 8, the hairline round a popup or
+menu on step 6, and elevation from `colors.shadow`, step 9. In dark the elevation shadows use
+Radix's `blackA` scale, since a dark alpha step would lighten. A shadow barely shows on a dark
+page, so every surface that floats also draws a hairline: popups, menus and tooltips in the
+shadow itself, and `raised` and `floating` with the border they are always paired with.
+
+<ShadowGrid />
+
+## Interactive states
+
+Every control sets its hover, pressed, focus and disabled looks from the same tokens: the hover
+and pressed fills one Radix step apart, the `ring` border and `focusRing` halo on focus, and half
+opacity when disabled. A theme changes them once for the whole library.
+
+<Story of={StateStories.States} />

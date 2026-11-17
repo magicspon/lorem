@@ -1,27 +1,14 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "extends": "@repo/config/tsconfig/library.json",
+
+  /**
+   * The tooling files, and only those. Package source is checked by each
+   * package's own tsconfig, via `pnpm -r typecheck`.
+   */
+  "include": [
+    "packages/*/vitest.config.ts",
+    "packages/*/vitest.setup.ts",
+    "apps/*/vitest.config.ts",
+    "vitest.config.ts"
+  ]
 }

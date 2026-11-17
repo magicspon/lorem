@@ -1,0 +1,25 @@
+// Project settings for Zed.
+{
+  // Zed followed pnpm's workspace links through node_modules up to nine levels
+  // deep, and rescanned them on every install, test run or graph update, which
+  // hung the UI. The list replaces Zed's defaults, so the first two lines repeat them.
+  "file_scan_exclusions": [
+    "**/.svn",
+    "**/.hg",
+    "**/.jj",
+    "**/.sl",
+    "**/.repo",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings",
+    "**/coverage",
+    "**/graphify-out",
+    "**/dist",
+    "**/test-results",
+    "**/.tanstack",
+    "**/node_modules",
+    "**/.turbo"
+  ]
+}

@@ -1,0 +1,31 @@
+packages:
+  - 'packages/*'
+  # The app. In the workspace so it consumes the packages by link, as source.
+  - 'apps/*'
+
+allowBuilds:
+  # Arrives through Vite and needs its postinstall to fetch the platform binary.
+  esbuild: true
+  # Only reaches the tree as Vitest's optional mocker peer; its postinstall
+  # writes a service worker nothing here uses.
+  msw: false
+
+# 3 days
+minimumReleaseAge: 4320
+# A release younger than the store's minimum age is held back until it appears
+# here. Normally pnpm writes this list and Renovate's bumps rewrite it; the
+# Storybook pins were the versions current on the day Storybook was added.
+# The cspell dictionary is a hand-added exception — it shipped inside the
+# three-day window while spell-checking was being set up. Drop it once a later
+# release ages past the cutoff.
+minimumReleaseAgeExclude:
+  - '@cspell/dict-npm@5.2.47'
+  - '@storybook/builder-vite@10.5.9'
+  - '@storybook/csf-plugin@10.5.9'
+  - '@storybook/react-dom-shim@10.5.9'
+  - '@storybook/react-vite@10.5.9'
+  - '@storybook/react@10.5.9'
+  - storybook@10.5.9
+  - lucide-react@1.45.0
+patchedDependencies:
+  '@stylexjs/unplugin': patches/@stylexjs__unplugin.patch

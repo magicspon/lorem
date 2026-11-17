@@ -1,0 +1,8 @@
+{
+  "extends": "./base.json",
+
+  /** For a package whose source is consumed as-is by the app or another package. */
+  "compilerOptions": {
+    "types": ["node"]
+  }
+}

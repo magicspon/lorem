@@ -1,0 +1,32 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  // Read by every run but not part of what a task produces. CI sets
+  // NODE_OPTIONS to quiet a Storybook warning; Playwright finds its browser
+  // through the path, if one is set.
+  "globalPassThroughEnv": ["CI", "NODE_OPTIONS", "PLAYWRIGHT_BROWSERS_PATH"],
+  "tasks": {
+    // No package has this script. It exists so a task can depend on its
+    // workspace packages' source without waiting for their own tasks: each
+    // package's `transit` hashes its files and its dependencies' `transit`.
+    // Packages are read as source, not built, so a change to one package must
+    // invalidate the tests and typecheck of those that use it.
+    "transit": {
+      "dependsOn": ["^transit"]
+    },
+    "typecheck": {
+      "dependsOn": ["transit"],
+      "outputs": []
+    },
+    // Node tests. The coverage map is the output, so a cache hit still hands
+    // fallow the map the run wrote.
+    "test:unit": {
+      "dependsOn": ["transit"],
+      "outputs": ["coverage/unit/**"]
+    },
+    // Stories as browser tests.
+    "test:component": {
+      "dependsOn": ["transit"],
+      "outputs": ["coverage/component/**"]
+    }
+  }
+}
